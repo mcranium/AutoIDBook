@@ -14,6 +14,7 @@ A Latex interpreter (`xelatex`) is used to transform a plain text Latex file int
 
 ## Prerequesites
 The code assumes a UNIX like operating system (Linux, MacOS, etc.), but can be easily adjusted to work on Windows.
+- A text editor or IDE (Integrated Development Environment) with Python and Latex syntax highlighting (e.g. [Visual Studio Code](https://code.visualstudio.com/) or [RStudio](https://posit.co/download/rstudio-desktop/)) should be installed 
 - Python3 needs to be installed, either system-wide or in a virtual environment (e.g. 'pyenv' or 'conda'). To install Python, use the package manager of your operating system or install a third party one (e.g. install [homebrew](https://brew.sh/) on MacOS)
 - The pandas Python package needs to be installed
 - A Latex distribution needs to be installed. On Ubuntu or Debian install `texlive-latex-extra`(comprises much more than needed here). On MacOS install [MacTex](https://www.tug.org/mactex/)
