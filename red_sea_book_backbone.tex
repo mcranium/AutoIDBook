@@ -1,0 +1,292 @@
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Pre-document specifications and packages
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Page layout specifications
+\documentclass[a4paper]{article}
+\usepackage[]{geometry}
+\geometry{a4paper}
+\geometry{left=1.3cm, right=1.3cm}
+\geometry{top=1.5cm, bottom=0.5cm}
+
+%%% Prerequisites for including images
+\usepackage{graphicx}
+\graphicspath{{images/}}
+
+%%% Date format
+\usepackage[yyyymmdd]{datetime} 
+\renewcommand{\dateseparator}{-}
+
+
+%%% Typography
+% \usepackage[sfdefault,light]{roboto}  %% Option 'sfdefault' only if the base font of the document is to be sans serif
+% \usepackage[T1]{fontenc}
+% \usepackage[sfdefault,light]{FiraSans} %% option 'sfdefault' activates Fira Sans as the default text font
+% \usepackage[T1]{fontenc}
+% \usepackage[sfdefault]{quattrocento}
+% \usepackage[T1]{fontenc}
+% \usepackage[default]{cantarell} %% Use option "defaultsans" to use cantarell as sans serif only
+% \usepackage[T1]{fontenc}
+% \usepackage[sfdefault,light]{inter} %% Option 'sfdefault' only if 'inter' is to be
+% % the base font of the document
+% \usepackage[T1]{fontenc}
+\usepackage{fontspec} % This is xelatex only!
+\setmainfont{Red Hat Text} % This is xelatex only!
+
+%%% Package to style the headers
+\usepackage{fancyhdr}
+
+
+%%% Package to use colored text (including gray!)
+\usepackage[dvipsnames]{xcolor}
+
+
+%%% Package to style the sections (including the space around them)
+\usepackage{titlesec}
+
+
+%%% Styling the table of contents
+\usepackage[toc]{multitoc} % toc with multiple columns
+\usepackage{tocloft} % for advanced styling (e.g. lines and fonts)
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} % dotted lines towards the page numbers
+
+
+%%% Line spacing (needed for the TOC)
+\usepackage{setspace}
+
+
+%%% Draw vector shapes 
+\usepackage{tikz}
+\usepackage[utf8]{inputenc} % needed?
+
+
+\newcommand{\abundanceAB}[1][]{%
+    \Checkmark\Checkmark\Checkmark\Checkmark\Checkmark
+}
+
+
+\newcommand{\abundanceC}[1][]{%
+    {\color{lightgray}\Checkmark}\Checkmark\Checkmark\Checkmark\Checkmark
+}
+
+
+\newcommand{\abundanceD}[1][]{%
+    {\color{lightgray}\Checkmark\Checkmark}\Checkmark\Checkmark\Checkmark
+}
+
+
+\newcommand{\abundanceE}[1][]{%
+    {\color{lightgray}\Checkmark\Checkmark\Checkmark}\Checkmark\Checkmark
+}
+
+
+\newcommand{\abundanceFH}[1][]{%
+    {\color{lightgray}\Checkmark\Checkmark\Checkmark\Checkmark}\Checkmark
+}
+
+
+
+%%% Package to create links within a PDF document
+%%% According to Schlosser 2021, this package should be loaded as the very last
+% \usepackage[hidelinks]{hyperref}
+% the hidelinks option prevents ugly colored boxes around the links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=NavyBlue,
+    urlcolor=NavyBlue,
+    pdftitle={Reef Fish Trainer for the Red Sea}
+    }
+
+
+%%% Function to use invisible sections
+\newcommand\invisiblesection[1]{%
+    \refstepcounter{section}%
+    \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+    \sectionmark{#1}
+}
+
+
+%%% For the checkmark symbol
+\usepackage{bbding}
+
+
+%%% Function to use invisible sections
+\newcommand{\abundant}[1]{%
+    \Checkmark\Checkmark\Checkmark\Checkmark\Checkmark
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Start of document
+%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%% Not using the numbered format of the headings
+%%% (starts the numbering at a lower level, e.g. at subsection)
+\setcounter{secnumdepth}{-1}
+
+
+\title{Reef Fish Trainer for the Red Sea\\
+Picture catalogue}
+
+\author{Nico K. Michiels}
+
+\date{\today} % this can be changed to e.g. \date{August 2023}
+
+
+
+
+%%% Style the header for the pages before the species part of the book
+\pagestyle{fancy} 
+\fancyhead[L]{} % nothing to be dispalyed on the left side
+\fancyhead[R]{\vspace{0.5cm} \thepage} % moving down the header (too small page margins) and page number on right side
+\fancyfoot{} % empty footer (removes the default page numbers)
+
+\setlength{\parindent}{0pt}
+
+\newgeometry{left=3cm, right=3cm, top=1.5cm, bottom=0.5cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Title page start
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\maketitle
+
+\begin{center}
+    \includegraphics[width=0.5\textwidth, keepaspectratio]{Blenniidae_Plagiotremus_townsendi_2022-12-27_14-51-40_EGY-MB_NKM_D500_MWB_NoF_iso800_105mm_d07m_NKM8963_DxO-LR.jpeg}
+\end{center}
+
+
+\begin{raggedright}
+
+    \bigskip
+
+    This digital catalogue contains the pictures of the Reef Fish Trainer for the Red Sea, an \href{https://apps.ankiweb.net/}{Anki} flashcard database developed to memorise the names and appearance of over 400 Red Sea reef fish species. For details of the project visit \url{https://uni-tuebingen.de/de/251585}
+
+    \bigskip
+
+    The photographers that contributed to the current version of this booklet are
+
+    \smallskip
+
+    Nico K. Michiels (93\% of the pictures - not indicated)
+
+    \smallskip
+
+    Other photographers (as indicated with the picture) are:
+    Anonymous, Beatrice Haertel, Benja Blaschke, Bram Van der Schoot, Carolin Rieber, Chiara Obst, Chris Harvey, Franka Michiels, Giovanna Reichert, Gregor Schulte, Jennifer Theobald, Julia Kastner, Julika Merckle, Matteo Santon, Nils Anthes, Robin Kraft, Sandra Dangelmayer, Stefan Greif, Valentin Fritsch, Yvonne Meyer
+
+    \bigskip
+
+    This material has been developed for students in marine biology. All images remain property of the Animal Evolutionary Ecology Group at the university of Tübingen (represented by Prof. Nico K. Michiels). Use for non-commercial, educational purposes is free, assuming you always mention the source. We appreciate feedback! Use for commercial purposes is prohibited, unless a prior usage contract has been agreed upon.
+
+    \bigskip
+
+    Usage recommendation: Use the document outline view of your PDF viewer (found under "Bookmarks" in Adobe Acrobat Reader on the far left side of the window) to facilitate convenient jumping between sections.
+
+    \bigskip
+
+    The abundance icons for fish species are based on own systematic observations at El Quseir, Mangrove Bay over >15 years and are coded as follows:
+
+\end{raggedright}
+
+\begin{center}
+    \begin{tabular}{l l}
+        \footnotesize{\abundanceAB}
+        & seen on >=90\% of the trips \\
+        \footnotesize{\abundanceC}
+        & seen on 75--89\% of the trips \\
+        \footnotesize{\abundanceD}
+        & seen on 50--74\% of the trips \\
+        \footnotesize{\abundanceE}
+        & seen on 25--49\% of the trips \\
+        \footnotesize{\abundanceFH}
+        & seen on <25\% of the trips \\  
+    \end{tabular}
+\end{center}
+
+
+
+
+
+
+%%% vertical alignment
+%%% https://latex.org/forum/viewtopic.php?t=34023
+
+
+\newpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Table of Contents
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Remove the page number from the table of contents (is pushed down by the many sections)
+\addtocontents{toc}{\protect\thispagestyle{fancy}} 
+
+
+%%% Remove the numbering in the TOC
+\makeatletter
+\renewcommand{\cftsecpresnum}{\begin{lrbox}{\@tempboxa}}
+\renewcommand{\cftsecaftersnum}{\end{lrbox}}
+\makeatother
+\setlength{\cftsecnumwidth}{0pt}
+%%% https://tex.stackexchange.com/a/71136
+
+
+
+
+
+\newgeometry{left=1.3cm, right=1.3cm, top=1.5cm, bottom=1cm}
+
+\hypertarget{tableofcontents}{}
+
+
+
+\setlength{\cftbeforesecskip}{0.7\baselineskip}
+
+%%% Customized title for the table of contents
+\renewcommand{\contentsname}{Table of contents}
+
+\phantomsection % needed for the hyperref package to work
+\small{\tableofcontents}
+
+\singlespacing
+
+
+\newpage
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% The species part
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Setting the vertical distance from the baseline of the header to the text area
+\setlength{\headsep}{0.5cm}
+
+
+%%% Styling of sections
+\titlespacing*{\section}{0pt}{0cm}{0.15cm} % {indentation}{space above}{space below}
+
+
+%%% Style the header for the species part of the book
+\fancyhead[L]{\hyperlink{tableofcontents}{Table of Contents}}
+\fancyhead[R]{\vspace{0.5cm} \nouppercase{\color{gray} \leftmark} \ \ \thepage}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Automated part
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% automated entries start %%%
+
+%%% automated entries end %%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+% Book end
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
