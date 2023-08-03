@@ -25,7 +25,9 @@ The code assumes a UNIX like operating system (Linux, MacOS, etc.), but can be e
 
 ## File size
 To reduce the file size of the final PDF, the original images were scaled down and compressed (lossy JPEG compression) using [Imagemagick]() with the following commands:
+
 ```mogrify -resize 480x320 -quality 85 *.jpg```
+
 ```mogrify -resize 480x320 -quality 85 *.jpeg```
 
 
