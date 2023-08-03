@@ -1,7 +1,9 @@
 '''
-This script holds the relevant functions to create the *page layout* for the fish identification book for the Red Sea as well as for other future books.
-The functions from this script are to be executed in another script, for which they need to be imported.
-For this to work, both (or all) scripts need to stay in the same directory.
+This script holds the relevant functions to create the *page layout*
+for the fish identification book for the Red Sea as well as for other future books.
+The functions from this script are to be executed in another script,
+for which they need to be imported. For this to work,
+both (or all) scripts need to stay in the same directory.
 '''
 
 import pandas as pd
@@ -11,6 +13,7 @@ import os
 def load_table(filepath, sortcolumn):
     '''
     Loeads and sorts the data from the table.
+    The data is assumed to be comma-delimited.
     '''
     df = pd.read_table(filepath, sep=",", index_col=0)
     df = df.sort_values(by=sortcolumn).reset_index()
@@ -33,8 +36,6 @@ def linewriter(filename, string):
     with open(filename, "a") as textfile:
         textfile.write(string + "\n")
 
-# linewriter("red_sea_book_automated.tex", r"% something at the very last line")
-
 
 def markfinder(filename, mark):
     """
@@ -52,7 +53,9 @@ def markfinder(filename, mark):
 
 def write_pre_automation_part(backbone_file_name, output_file_name, automation_start_mark):
     '''
-    Takes the first set of lines from a text file up to a specied marker (will not be included) and writes them into another text file.
+    Takes the first set of lines from a text file (the "backbone" of the document)
+    up to a specied marker (the marker will not be included)
+    and writes them into another text file.
     '''
     backbone = open(backbone_file_name)
     backbone = backbone.readlines()
@@ -70,7 +73,8 @@ def write_pre_automation_part(backbone_file_name, output_file_name, automation_s
 
 def write_post_automation_part(backbone_file_name, output_file_name, automation_end_mark):
     '''
-    Takes the last set of lines from a text file, from a specied marker (will not be included) to to the end and writes them into another text file.
+    Takes the last set of lines from a text file (the "backbone" of the document)
+    from a specied marker (will not be included) up until the end and writes them into another text file.
     '''
     backbone = open(backbone_file_name)
     backbone = backbone.readlines()
@@ -80,26 +84,24 @@ def write_post_automation_part(backbone_file_name, output_file_name, automation_
     filewriter(output_file_name, post_automation_part)
 
 
+### This is currently not in use, as xelatex is used over pdflatex (xelatex can handle system fonts)
+# def compile_pdf(texfile_name):
+#     '''
+#     Takes a textfile (assumes Latex formatting) and uses pdflatex to compile a PDF with the same filename base.
+#     Compiles twice to achieve a correct table of contents.
+#     '''
+#     os.system(f"pdflatex {texfile_name}")
+#     os.system(f"pdflatex {texfile_name}")
+#     os.system(f"pdflatex {texfile_name}")
 
-
-def compile_pdf(texfile_name):
-    '''
-    Takes a textfile (assumes Latex formatting) and uses pdflatex to compile a PDF with the same filename base.
-    Compiles twice to achieve a correct table of contents.
-    '''
-    os.system(f"pdflatex {texfile_name}")
-    os.system(f"pdflatex {texfile_name}")
-    os.system(f"pdflatex {texfile_name}")
 
 def compile_pdf_xelatex(texfile_name):
     '''
-    Takes a textfile (assumes Latex formatting) and uses pdflatex to compile a PDF with the same filename base.
+    Takes a textfile (assumes Latex formatting) and uses xelatex to compile a PDF with the same filename base.
     Compiles twice to achieve a correct table of contents.
     '''
     os.system(f"xelatex {texfile_name}")
     os.system(f"xelatex {texfile_name}")
-
-
 
 
 def read_textfile(filename):
@@ -111,21 +113,25 @@ def read_textfile(filename):
     return text
 
 
-
-def replacer(listoflines, dictionary):
-    '''
-    Takes a list of strings (extracted from a text file) and replaces parts of the strings with the aid of a dictionary.
-    '''
-    # loop through the lines
-    for i in range(len(listoflines)):
-        # loop through the dictionary
-        for key, value in dictionary.items():
-            textfile[i] = textfile[i].replace(key, value)
-
-    return listoflines
+### Currently not in use (not needed)
+# def replacer(listoflines, dictionary):
+#     '''
+#     Takes a list of strings (extracted from a text file) and replaces parts of the strings with the aid of a dictionary.
+#     '''
+#     # loop through the lines
+#     for i in range(len(listoflines)):
+#         # loop through the dictionary
+#         for key, value in dictionary.items():
+#             textfile[i] = textfile[i].replace(key, value)
+#     return listoflines
 
 
 def photographer_credit(i, df):
+    '''
+    Checks the column with the photographer and 
+    if it is not the main photographer (Nico Michiels),
+    it returns a Latex formatted string with the photographer's name.
+    '''
     photographer = df["Photographer in full"][i]
     credit = r"\tiny{\phantom{Ig}} \hfill \textcopyright \ " + photographer[4:]
     nocredit = r"\tiny{\phantom{Ig}}"
@@ -136,6 +142,10 @@ def photographer_credit(i, df):
 
 
 def actual_length(i, df):
+    '''
+    Returns a string with the length information, if the entry in the table is not empty (nan),
+    if it is empty, it returns an empty string ("").
+    '''
     length_info = df["Length (cm) for adults only"][i]
     try:
         length_string = length_info[2:][:2] + r" cm, "
@@ -145,6 +155,10 @@ def actual_length(i, df):
 
 
 def behaviour(i, df):
+    '''
+    Returns a string with the behaviour information, if the entry in the table is not empty (nan),
+    if it is empty, it returns an empty string ("").
+    '''
     behav_info = df["Behaviour translated"][i]
     if isinstance(behav_info, str) == True:
         behav_str = behav_info
@@ -154,6 +168,10 @@ def behaviour(i, df):
 
 
 def abundance(i, df):
+    '''
+    Returns a custom latex command (speciefied in the "backbone" file, 
+    will become a set of symbols on either gray or black) for sets of abundance categories.
+    '''
     if df["% Category"][i] in ["Abundance-A-(>95%)", "Abundance-B-(90-95%)"]:
         icon = r"\abundanceAB"
     elif df["% Category"][i] == "Abundance-C-(75-89%)":
@@ -167,6 +185,10 @@ def abundance(i, df):
     return icon
 
 def identification_cf(i, df):
+    '''
+    Returns a string that indicates uncertainty of the species identification,
+    if it is coded with an "cf" in the table.
+    '''
     if df["ok/cf"][i] == 'cf':
         ident_str = " (?)"
     else:
@@ -177,7 +199,11 @@ def identification_cf(i, df):
 
 
 def three_entries(target, i, df):
-    # " + df[""][i] + r"
+    '''
+    Appends a Latex table with three columns to a text file,
+    **all** of the three columns being populated with each an image (first row)
+    and four rows of text.
+    '''
     content = [
         # r"\vspace{-0.5cm}",
         r"\begin{center}",
@@ -222,7 +248,11 @@ def three_entries(target, i, df):
 
 
 def two_entries(target, i, df):
-    # " + df[""][i] + r"
+    '''
+    Appends a Latex table with three columns to a text file,
+    **two** of the three columns being populated with each an image (first row)
+    and four rows of text.
+    '''
     content = [
         # r"\vspace{-0.5cm}",
         r"\begin{center}",
@@ -267,7 +297,11 @@ def two_entries(target, i, df):
 
 
 def one_entry(target, i, df):
-    # " + df[""][i] + r"
+    '''
+    Appends a Latex table with three columns to a text file,
+    **one** of the three columns being populated with each an image (first row)
+    and four rows of text.
+    '''
     content = [
         # r"\vspace{-0.5cm}",
         r"\begin{center}",
@@ -311,6 +345,12 @@ def one_entry(target, i, df):
         linewriter(target, content[j])
 
 def section_heading(target, i, df):
+    '''
+    Appends a Latex section heading to a text file.
+    An invisible section (custom Latex command specified in the "backbone" file)
+    is used to put the heading on two rows, despite the heading that Latex uses for the 
+    table of contents being a single string of varying length.
+    '''
     content = [
         r"\invisiblesection{" + df["Booklet Section Header"][i] + r"}",
         r"\vspace*{3.25cm}", ### This is one of the most important adjustment sites!
@@ -325,6 +365,11 @@ def section_heading(target, i, df):
 
 
 def first_in_section_column(df):
+    '''
+    Creates a new column in the data frame (not written to the table csv file),
+    that holds the binary information whether an entry is the first in its section (1)
+    or not (0).
+    '''
     df["first_in_section"] = 0
     for i in range(0,df.shape[0]):
         section_name = df["Booklet Section Header"][i]
@@ -335,11 +380,18 @@ def first_in_section_column(df):
     return df
 
 
-
-
-
 def make_all_entries(target, df):
+    '''
+    This function is a wrapper for most other functions and deals with
+    the section headings, pagebreaks and whether one, two or three entries
+    have to be made per each (three column) table 
+    (each table representing one row of entries in the final book).
 
+    Pagebreaks are hard-coded to occur after 5 rows of entries (5 Latex tables or section headings)
+    or after 4 rows, if the last row would be a section heading.
+
+    The try statements are used to deal with index errors when at the very bottom of the table.
+    '''
     i = 0
     pagerow = 0
 
@@ -431,42 +483,3 @@ def make_all_entries(target, df):
                 print("put 3 items")
             except:
                 print("could not put 3 items")
-        
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def looping(df, target):
-#     for i in range(len(df)):
-#         # print(df.loc[i, "Alphabetical systematic/phenotypic Sorting"], df.loc[i, "Genus"])
-#         # linewriter(filename, string)(df.loc[i, "Alphabetical systematic/phenotypic Sorting"] + df.loc[i, "Genus"])
-#         linewriter(target, "% many more lines")
-
-# # looping(df, "red_sea_book_automated.tex")
-
-
-
-
-
-
-# if __name__ == "__main__":
-#     # For testing purposes
-#     df = load_table("RedSea 2023-07-12 Anki Deck 13 with template updated.txt", "Alphabetical systematic/phenotypic Sorting")
-#     markfinder("red_sea_book_backbone.tex", r"%%% automated entries start %%%")
-#     markfinder("red_sea_book_backbone.tex", r"%%% automated entries end %%%")
-#     write_pre_automation_part("red_sea_book_backbone.tex", "red_sea_book_automated.tex", r"%%% automated entries start %%%")
-#     write_post_automation_part("red_sea_book_backbone.tex", "red_sea_book_automated.tex", r"%%% automated entries end %%%")
-#     # compile_pdf("red_sea_book_automated.tex")
-    

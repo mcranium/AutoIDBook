@@ -9,7 +9,7 @@ The code is made freely available here, despite in part being very specific to t
  
 
 ## Basic principle
-A Latex interpreter (`xelatex`) is used to transform a plain text Latex file into a PDF document. The Latex document is created by populating a 'backbone' version with additional content via a Python script. The 'backbone' version contains marks that define where the additonal content gets inserted. The additional content comprises headings (incl. the spacing around them) and tables with three columns that will appear as rows in a grid-like layout. The tables consist of a row that houses the images (in our case all images have the same dimensions), a row that (wheb a condition is met) refers to a photographer, and three rows that contain the names and ecological information of/about the depicted species. Page breaks are inserted manually, in order to prevent headings to not appear at the bottom of the page (Latex could do that automatically but this interferes with the regularity of the grid layout (tables are floating objects in Latex). Invisible sections are used to separate the headings into two parts (the Latin name of the systematic group and their vernacular names).
+A Latex interpreter (`xelatex`) is used to transform a plain text Latex file into a PDF document. The Latex document is created by populating a 'backbone' version with additional content via a Python script. The 'backbone' version contains marks that define where the additonal content gets inserted. The additional content comprises headings (incl. the spacing around them) and tables with three columns that will appear as rows in a grid-like layout. The tables consist of a row that houses the images (in our case all images have the same dimensions), a row that (wheb a condition is met) refers to a photographer, and three rows that contain the names and ecological information of/about the depicted species. Page breaks are inserted manually, in order to prevent headings to not appear at the bottom of the page (Latex could do that automatically but this interferes with the regularity of the grid layout as tables are floating objects in Latex). Invisible sections are used to separate the headings into two parts (the Latin name of the systematic group and their vernacular names).
 
 
 ## Prerequesites
@@ -20,6 +20,13 @@ The code assumes a UNIX like operating system (Linux, MacOS, etc.), but can be e
 - A Latex distribution needs to be installed. On Ubuntu or Debian install `texlive-latex-extra`(comprises much more than needed here). On MacOS install [MacTex](https://www.tug.org/mactex/)
 - The tabular data should be appropriately formatted (entries as rows, first row are the column names) and saved in text format (`.csv` or `.txt`) with commas as separators
 - The images need to have file names that **exactly** match the ones in the table
+- The font [Red Hat Text](https://fonts.google.com/specimen/Red+Hat+Text) needs to be installed and available to Xetex. On Linux it can be put into `~/.fonts/`, on MacOS the [installation](https://support.apple.com/en-us/HT201749) is initiated by double-clicking.
+
+
+## File size
+To reduce the file size of the final PDF, the original images were scaled down and compressed (lossy JPEG compression) using [Imagemagick]() with the following commands:
+```mogrify -resize 480x320 -quality 85 *.jpg```
+```mogrify -resize 480x320 -quality 85 *.jpeg```
 
 
 ## Running the scripts
