@@ -147,10 +147,10 @@ def actual_length(i, df):
     if it is empty, it returns an empty string ("").
     '''
     length_info = df["Length (cm) for adults only"][i]
-    try:
-        length_string = length_info[2:][:2] + r" cm, "
-    except:
-        length_string = r""
+    if isinstance(length_info, str) == True:
+        length_string = length_info[2:] + r", "
+    else:
+        length_string = r"" 
     return length_string
 
 
